@@ -1,0 +1,36 @@
+---
+interface Props {
+  videoId: string;
+  judul: string;
+}
+
+const { videoId, judul } = Astro.props;
+const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+---
+
+<div class="video-usaha relative rounded-2xl overflow-hidden bg-canvas border border-line aspect-video" data-video-id={videoId}>
+  <button class="video-facade absolute inset-0 w-full h-full group cursor-pointer" aria-label={`Putar video ${judul}`} type="button">
+    <img src={thumbnail} alt={`Thumbnail video ${judul}`} class="w-full h-full object-cover" />
+    <span class="absolute inset-0 bg-ink/30 group-hover:bg-ink/40 transition-colors flex items-center justify-center">
+      <span class="w-16 h-16 rounded-full bg-white/90 group-hover:bg-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+        <svg viewBox="0 0 24 24" class="w-7 h-7 text-indigo-600 ml-1" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+    </span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('.video-usaha').forEach((wrapper) => {
+    const facade = wrapper.querySelector('.video-facade');
+    const videoId = wrapper.getAttribute('data-video-id');
+    facade?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+      iframe.className = 'w-full h-full absolute inset-0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      wrapper.innerHTML = '';
+      wrapper.appendChild(iframe);
+    });
+  });
+</script>

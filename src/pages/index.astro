@@ -10,7 +10,7 @@ const totalNib = umkmData.filter(u => u.nib).length;
 const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
 ---
 
-<Layout title="Direktori UMKM Desa Banyakprodo" description="Mendukung potensi produk lokal, kerajinan, dan kuliner unggulan warga Desa Banyakprodo, Kecamatan Tirtomoyo, Wonogiri." gambar="/peta-banyakprodo.jpeg">
+<Layout title="Direktori UMKM Desa Banyakprodo" description="Mendukung potensi produk lokal, kerajinan, dan kuliner unggulan warga Desa Banyakprodo, Kecamatan Tirtomoyo, Wonogiri." gambar="/peta-og.jpg">
   <main class="min-h-screen bg-canvas text-ink">
 
     <!-- HERO SECTION -->
@@ -127,6 +127,10 @@ const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
             {kategori}
           </button>
         ))}
+        <button id="filterBukaSekarangBtn" data-active="false" class="bg-surface text-ink-soft border-line border hover:bg-sawah-50 hover:text-sawah-600 px-5 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm inline-flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-sawah-500"></span>
+          Buka Sekarang
+        </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="umkmGrid">
@@ -160,7 +164,7 @@ const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
     </div>
 
     <!-- SCRIPT LOGIKA LIVE SEARCH, FILTER & MODAL PETA -->
-    <script>
+    <script define:vars={{ umkmDataForFilter: umkmData.map(u => ({ id: u.id, jamOperasional: u.jamOperasional })) }}>
       document.addEventListener('DOMContentLoaded', () => {
         const mapModal = document.getElementById('mapModal');
         const mapThumb = document.getElementById('mapThumb');
@@ -172,50 +176,71 @@ const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
           mapModal?.classList.add('flex');
           document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
           mapModal?.classList.add('hidden');
           mapModal?.classList.remove('flex');
           document.body.style.overflow = 'auto';
         }
-
         mapThumb?.addEventListener('click', openModal);
         openModalBtn?.addEventListener('click', openModal);
         closeModalBtn?.addEventListener('click', closeModal);
-
         mapModal?.addEventListener('click', (e) => {
-          if (e.target === mapModal) {
-            closeModal();
-          }
+          if (e.target === mapModal) closeModal();
         });
 
-        const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+        function cekStatusBuka(jadwal) {
+          if (!jadwal || !jadwal.hariBuka || !jadwal.buka || !jadwal.tutup) return false;
+          const now = new Date();
+          const hariIni = now.getDay();
+          if (!jadwal.hariBuka.includes(hariIni)) return false;
+          const [jamBuka, menitBuka] = jadwal.buka.split(":").map(Number);
+          const [jamTutup, menitTutup] = jadwal.tutup.split(":").map(Number);
+          const totalMenitSekarang = now.getHours() * 60 + now.getMinutes();
+          const totalMenitBuka = jamBuka * 60 + menitBuka;
+          const totalMenitTutup = jamTutup * 60 + menitTutup;
+          return totalMenitSekarang >= totalMenitBuka && totalMenitSekarang <= totalMenitTutup;
+        }
+
+        const petaStatusBuka = {};
+        umkmDataForFilter.forEach((u) => {
+          petaStatusBuka[u.id] = cekStatusBuka(u.jamOperasional);
+        });
+
+        const searchInput = document.getElementById('searchInput');
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.umkm-card') as NodeListOf<HTMLElement>;
+        const filterBukaSekarangBtn = document.getElementById('filterBukaSekarangBtn');
+        const cards = document.querySelectorAll('.umkm-card');
         const noResults = document.getElementById('noResults');
         const resetSearch = document.getElementById('resetSearch');
 
         let currentCategory = 'semua';
         let searchQuery = '';
+        let hanyaBuka = false;
+
+        function ambilIdDariCard(card) {
+          const link = card.querySelector('a[href^="/umkm/"]');
+          if (!link) return null;
+          return link.getAttribute('href').replace('/umkm/', '');
+        }
 
         function filterCards() {
           let visibleCount = 0;
-
           cards.forEach(card => {
             const nama = card.getAttribute('data-nama') || '';
             const kategori = card.getAttribute('data-kategori') || '';
+            const id = ambilIdDariCard(card);
 
             const matchesSearch = nama.includes(searchQuery);
             const matchesCategory = currentCategory === 'semua' || kategori === currentCategory;
+            const matchesBuka = !hanyaBuka || (id && petaStatusBuka[id]);
 
-            if (matchesSearch && matchesCategory) {
+            if (matchesSearch && matchesCategory && matchesBuka) {
               card.style.display = 'flex';
               visibleCount++;
             } else {
               card.style.display = 'none';
             }
           });
-
           if (visibleCount === 0) {
             noResults?.classList.remove('hidden');
           } else {
@@ -224,33 +249,41 @@ const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
         }
 
         searchInput?.addEventListener('input', (e) => {
-          const target = e.target as HTMLInputElement;
-          searchQuery = target.value.toLowerCase().trim();
+          searchQuery = e.target.value.toLowerCase().trim();
           filterCards();
         });
 
         filterBtns.forEach(btn => {
           btn.addEventListener('click', (e) => {
-            const target = e.currentTarget as HTMLElement;
-
+            const target = e.currentTarget;
             filterBtns.forEach(b => {
               b.classList.remove('bg-indigo-600', 'text-white', 'border-transparent');
               b.classList.add('bg-surface', 'text-ink-soft', 'border-line');
             });
-
             target.classList.remove('bg-surface', 'text-ink-soft', 'border-line');
             target.classList.add('bg-indigo-600', 'text-white', 'border-transparent');
-
             currentCategory = target.getAttribute('data-kategori') || 'semua';
             filterCards();
           });
         });
 
+        filterBukaSekarangBtn?.addEventListener('click', () => {
+          hanyaBuka = !hanyaBuka;
+          filterBukaSekarangBtn.setAttribute('data-active', String(hanyaBuka));
+          if (hanyaBuka) {
+            filterBukaSekarangBtn.classList.remove('bg-surface', 'text-ink-soft', 'border-line', 'hover:bg-sawah-50', 'hover:text-sawah-600');
+            filterBukaSekarangBtn.classList.add('bg-sawah-500', 'text-white', 'border-transparent', 'hover:bg-sawah-600');
+          } else {
+            filterBukaSekarangBtn.classList.remove('bg-sawah-500', 'text-white', 'border-transparent', 'hover:bg-sawah-600');
+            filterBukaSekarangBtn.classList.add('bg-surface', 'text-ink-soft', 'border-line', 'hover:bg-sawah-50', 'hover:text-sawah-600');
+          }
+          filterCards();
+        });
+
         resetSearch?.addEventListener('click', () => {
           searchInput.value = '';
           searchQuery = '';
-          const btnSemua = document.querySelector('[data-kategori="semua"]') as HTMLElement;
-          btnSemua?.click();
+          document.querySelector('[data-kategori="semua"]')?.click();
         });
       });
     </script>

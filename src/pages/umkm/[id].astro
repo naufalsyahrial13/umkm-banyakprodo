@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import UmkmCard from '../../components/umkm/UmkmCard.astro';
 import GaleriFoto from '../../components/umkm/GaleriFoto.astro';
+import VideoUsaha from '../../components/umkm/VideoUsaha.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import umkmData from '../../data/umkm.json';
 
@@ -115,6 +116,13 @@ const umkmSejenis = umkmData.filter(
             <h2 class="text-lg font-bold text-ink">Deskripsi Usaha</h2>
             <p class="text-ink-soft leading-relaxed">{item.deskripsi}</p>
           </div>
+
+          {item.video && (
+            <div class="space-y-2">
+              <h2 class="text-lg font-bold text-ink">Video Profil Usaha</h2>
+              <VideoUsaha videoId={item.video} judul={item.nama} />
+            </div>
+          )}
 
           <div class="bg-canvas rounded-2xl p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 border border-line">
             <div>
