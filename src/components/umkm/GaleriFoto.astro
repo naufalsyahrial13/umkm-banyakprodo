@@ -1,0 +1,82 @@
+---
+interface Props {
+  gambar: string[];
+  nama: string;
+}
+
+const { gambar, nama } = Astro.props;
+const galeri = gambar && gambar.length > 0 ? gambar : [];
+---
+
+<div class="galeri-foto" data-total={galeri.length}>
+  <div class="relative h-72 sm:h-96 w-full bg-canvas overflow-hidden">
+    <div class="skeleton absolute inset-0 bg-line animate-pulse"></div>
+    {galeri.map((src, i) => (
+      <img
+        src={src}
+        alt={`${nama} - foto ${i + 1}`}
+        class={`galeri-img absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${i === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        loading={i === 0 ? "eager" : "lazy"}
+      />
+    ))}
+    {galeri.length > 1 && (
+      <>
+        <button class="galeri-prev absolute left-3 top-1/2 -translate-y-1/2 bg-surface/80 hover:bg-surface text-ink w-9 h-9 rounded-full flex items-center justify-center shadow-md z-20 text-lg font-bold">‹</button>
+        <button class="galeri-next absolute right-3 top-1/2 -translate-y-1/2 bg-surface/80 hover:bg-surface text-ink w-9 h-9 rounded-full flex items-center justify-center shadow-md z-20 text-lg font-bold">›</button>
+        <span class="galeri-counter absolute bottom-3 right-3 bg-ink/70 text-white text-xs font-bold px-2.5 py-1 rounded-full z-20">1 / {galeri.length}</span>
+      </>
+    )}
+  </div>
+
+  {galeri.length > 1 && (
+    <div class="flex gap-2 p-3 overflow-x-auto bg-surface">
+      {galeri.map((src, i) => (
+        <button class={`galeri-thumb flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${i === 0 ? 'border-indigo-600' : 'border-transparent'}`}>
+          <img src={src} alt="" class="w-full h-full object-cover" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('.galeri-foto').forEach((galeriEl) => {
+    const total = parseInt(galeriEl.getAttribute('data-total') || '1');
+    let current = 0;
+    const imgs = galeriEl.querySelectorAll('.galeri-img');
+    const thumbs = galeriEl.querySelectorAll('.galeri-thumb');
+    const skeleton = galeriEl.querySelector('.skeleton');
+    const counter = galeriEl.querySelector('.galeri-counter');
+
+    function tampilkan(index) {
+      imgs.forEach((img, i) => {
+        img.classList.toggle('opacity-100', i === index);
+        img.classList.toggle('opacity-0', i !== index);
+        img.classList.toggle('pointer-events-none', i !== index);
+      });
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('border-indigo-600', i === index);
+        t.classList.toggle('border-transparent', i !== index);
+      });
+      if (counter) counter.textContent = `${index + 1} / ${total}`;
+      current = index;
+    }
+
+    galeriEl.querySelector('.galeri-prev')?.addEventListener('click', () => {
+      tampilkan((current - 1 + total) % total);
+    });
+    galeriEl.querySelector('.galeri-next')?.addEventListener('click', () => {
+      tampilkan((current + 1) % total);
+    });
+    thumbs.forEach((t, i) => {
+      t.addEventListener('click', () => tampilkan(i));
+    });
+
+    const firstImg = imgs[0] as HTMLImageElement;
+    if (firstImg && firstImg.complete) {
+      skeleton?.remove();
+    } else {
+      firstImg?.addEventListener('load', () => skeleton?.remove(), { once: true });
+    }
+  });
+</script>

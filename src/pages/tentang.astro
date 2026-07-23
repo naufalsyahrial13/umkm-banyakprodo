@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const anggotaKKN = [
+  { no: 1, nama: "Dusseldorf Daffa Priansyah", nim: "12010123140255", prodi: "FEB / Manajemen" },
+  { no: 2, nama: "Anindhya Rahma Bachtiar", nim: "11000123140729", prodi: "FH / Hukum" },
+  { no: 3, nama: "Revanada Arimartha", nim: "13010123140167", prodi: "FIB / Sastra Indonesia" },
+  { no: 4, nama: "Faza Tafaul Faiyah", nim: "14020123140168", prodi: "FISIP / Administrasi Publik" },
+  { no: 5, nama: "Dwi Maharani", nim: "22030123140105", prodi: "FK / Gizi" },
+  { no: 6, nama: "Nur Azizah Tsalatsa", nim: "26010123140089", prodi: "FPIK / Manajemen Sumber Daya Perairan" },
+  { no: 7, nama: "Hanifa Aqila Shofa", nim: "15000123140253", prodi: "Fakultas / Prodi Lainnya" },
+  { no: 8, nama: "Tsuraya Safa Zerlina", nim: "24050123120012", prodi: "FSM / Statistika" },
+  { no: 9, nama: "Soca Priyambada", nim: "40020623650160", prodi: "SV / Informasi dan Humas" },
+  { no: 10, nama: "Muhammad Naufal Syahrial", nim: "21060123130075", prodi: "FT / Teknik Elektro" },
+];
+---
+
+<Layout title="Tentang Kami - KKN Tim II Desa Banyakprodo" description="Mahasiswa KKN UNDIP Desa Banyakprodo, Kecamatan Tirtomoyo, Kabupaten Wonogiri.">
+  <main class="min-h-screen bg-canvas py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto space-y-12">
+
+      <!-- Header Judul -->
+      <div class="reveal text-center space-y-3">
+        <span class="bg-soga-100 text-soga-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          KKN Tim II Universitas Diponegoro
+        </span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-ink">Tim Pengembang Website</h1>
+        <p class="text-ink-soft max-w-2xl mx-auto text-sm sm:text-base">
+          Mahasiswa KKN UNDIP Desa Banyakprodo, Kecamatan Tirtomoyo, Kabupaten Wonogiri.
+        </p>
+      </div>
+
+      <!-- Komitmen Kami -->
+      <div class="reveal bg-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-line space-y-4">
+        <h2 class="text-xl font-bold text-ink flex items-center gap-2">
+          <span>🎯</span> Komitmen Kami
+        </h2>
+        <p class="text-ink-soft leading-relaxed text-sm sm:text-base">
+          Website Direktori UMKM ini dirancang dan dibangun sebagai bagian dari program kerja digitalisasi UMKM Desa Banyakprodo. Tujuan utama kami adalah membantu pelaku usaha lokal agar memiliki visibilitas digital yang lebih luas, sehingga produk unggulan desa dapat lebih mudah dijangkau oleh konsumen secara umum dan meningkatkan perekonomian warga.
+        </p>
+      </div>
+
+      <!-- Tabel Daftar Anggota KKN -->
+      <div class="reveal bg-surface rounded-3xl p-6 sm:p-8 shadow-sm border border-line space-y-6">
+        <div>
+          <h2 class="text-xl font-bold text-ink flex items-center gap-2">
+            <span>👥</span> Daftar Anggota Tim KKN Desa Banyakprodo
+          </h2>
+          <p class="text-ink-soft text-sm mt-1">Daftar mahasiswa pelaksana program pengabdian di Desa Banyakprodo.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-line bg-canvas text-ink-soft text-xs sm:text-sm uppercase tracking-wider">
+                <th class="py-3 px-4 font-bold">No</th>
+                <th class="py-3 px-4 font-bold">Nama Lengkap</th>
+                <th class="py-3 px-4 font-bold">NIM</th>
+                <th class="py-3 px-4 font-bold">Fakultas / Prodi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line text-ink-soft text-sm">
+              {anggotaKKN.map((m) => (
+                <tr class="hover:bg-canvas/60 transition-colors">
+                  <td class="py-3 px-4 font-medium text-ink-faint">{m.no}</td>
+                  <td class="py-3 px-4 font-bold text-ink">
+                    {m.nama}
+                  </td>
+                  <td class="py-3 px-4 font-mono text-xs text-ink-faint">{m.nim}</td>
+                  <td class="py-3 px-4">{m.prodi}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</Layout>

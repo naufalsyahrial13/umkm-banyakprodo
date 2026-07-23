@@ -1,0 +1,141 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  gambar?: string;
+}
+
+const {
+  title,
+  description = "Direktori digital UMKM Desa Banyakprodo, Kecamatan Tirtomoyo, Kabupaten Wonogiri — produk lokal, kerajinan, dan kuliner unggulan warga.",
+  gambar = "/peta-banyakprodo.jpeg",
+} = Astro.props;
+
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+
+const nomorWhatsAppTim = "6281234567890";
+
+const gambarUrl = new URL(gambar, Astro.site ?? Astro.url).toString();
+const urlHalaman = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph: dibaca WhatsApp/Instagram/Facebook untuk bikin preview link -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={gambarUrl} />
+    <meta property="og:url" content={urlHalaman} />
+    <meta property="og:site_name" content="UMKM Banyakprodo" />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Card, jaga-jaga kalau dibagikan lewat X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={gambarUrl} />
+  </head>
+  <body class="bg-canvas text-ink antialiased">
+
+    <Navbar />
+
+    <slot />
+
+    <!-- FOOTER -->
+    <footer class="bg-ink text-ink-faint pt-14 pb-8 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-white/10">
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-2.5">
+            <svg viewBox="0 0 64 64" class="h-8 w-8 rounded-lg">
+              <rect width="64" height="64" rx="14" fill="#2D3B5C"/>
+              <g transform="rotate(-14 32 32)">
+                <path d="M8 20 L26 10 L35 18 L35 33 Q35 39 29 41 L14 47 Q8 45 8 38 Z" fill="#FFFFFF"/>
+                <path d="M26 10 L35 18 L29 20 Z" fill="#B5652E" opacity="0.85"/>
+                <line x1="12" y1="34" x2="21" y2="25" stroke="#B5652E" stroke-width="1.4"/>
+                <line x1="16" y1="39" x2="26" y2="28" stroke="#B5652E" stroke-width="1.4"/>
+                <line x1="20" y1="43" x2="30" y2="31" stroke="#B5652E" stroke-width="1.4"/>
+                <circle cx="14" cy="24" r="1.4" fill="#B5652E" opacity="0.75"/>
+                <circle cx="22" cy="18" r="1.4" fill="#B5652E" opacity="0.75"/>
+                <circle cx="19" cy="32" r="1.4" fill="#B5652E" opacity="0.6"/>
+                <ellipse cx="48" cy="29" rx="14" ry="3.8" fill="#FFFFFF"/>
+                <path d="M34 29 Q35 45 48 48 Q61 45 62 29 Z" fill="#FFFFFF"/>
+                <circle cx="43" cy="37" r="3.1" fill="#B5652E"/>
+                <circle cx="52" cy="39" r="2.7" fill="#B5652E"/>
+                <circle cx="48" cy="34" r="2.3" fill="#B5652E" opacity="0.9"/>
+                <path d="M41 18 Q39 12 42 7" stroke="#FFFFFF" stroke-width="1.8" fill="none" opacity="0.85"/>
+                <path d="M53 18 Q55 12 52 7" stroke="#FFFFFF" stroke-width="1.8" fill="none" opacity="0.85"/>
+              </g>
+            </svg>
+            <span class="text-surface font-bold text-lg font-display">UMKM Banyakprodo</span>
+          </div>
+          <p class="text-sm leading-relaxed max-w-xs">
+            Direktori digital produk lokal, kerajinan, dan kuliner unggulan warga Desa Banyakprodo, Kecamatan Tirtomoyo, Wonogiri.
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="text-surface font-semibold text-sm uppercase tracking-wider">Jelajahi</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-soga-100 transition-colors">Beranda</a></li>
+            <li><a href="/#katalog" class="hover:text-soga-100 transition-colors">Katalog UMKM</a></li>
+            <li><a href="/tentang" class="hover:text-soga-100 transition-colors">Tim KKN</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="text-surface font-semibold text-sm uppercase tracking-wider">Kontak</h4>
+          <ul class="space-y-2 text-sm">
+            <li>📍 Desa Banyakprodo, Kec. Tirtomoyo, Kab. Wonogiri</li>
+            <li>
+              <a href={`https://wa.me/${nomorWhatsAppTim}`} target="_blank" class="hover:text-soga-100 transition-colors">
+                💬 Hubungi Tim KKN via WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="max-w-6xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+        <p>© 2026 Tim KKN Tim II Desa Banyakprodo, Universitas Diponegoro.</p>
+        <p>Dibangun sebagai program kerja Penguatan UMKM Desa Banyakprodo.</p>
+      </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    
+      <a href={`https://wa.me/${nomorWhatsAppTim}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="fixed bottom-6 right-6 z-40 bg-sawah-500 hover:bg-sawah-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+      aria-label="Hubungi via WhatsApp"
+    >
+      <span class="text-2xl">💬</span>
+    </a>
+
+    <!-- SCROLL REVEAL (berlaku di semua halaman) -->
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+
+  </body>
+</html>

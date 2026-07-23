@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import umkmData from '../../data/umkm.json';
+
+export async function getStaticPaths() {
+  return umkmData.map((item) => ({
+    params: { id: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+
+// Mencari UMKM lain dengan kategori yang sama untuk rekomendasi
+const umkmSejenis = umkmData.filter(
+  (u) => u.kategori === item.kategori && u.id !== item.id
+);
+---
+
+<Layout title={`${item.nama} - Detail UMKM Banyakprodo`}>
+  <main class="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+      
+      <!-- Tombol Kembali -->
+      <a href="/#katalog" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors">
+        ← Kembali ke Katalog
+      </a>
+
+      <!-- DETAIL UTAMA UMKM -->
+      <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200">
+        <div class="relative h-72 sm:h-96 w-full bg-slate-100">
+          <img src={item.gambar} alt={item.nama} class="w-full h-full object-cover" />
+          <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-800 text-sm font-bold px-3 py-1 rounded-lg shadow-sm">
+            {item.kategori}
+          </span>
+          {item.halal && (
+            <span class="absolute top-4 right-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">
+              ✓ Tersertifikasi Halal
+            </span>
+          )}
+        </div>
+
+        <div class="p-6 sm:p-8 space-y-6">
+          <div>
+            <h1 class="text-3xl font-extrabold text-slate-900">{item.nama}</h1>
+            <p class="text-slate-500 font-medium mt-1">Pemilik Usaha: <span class="text-slate-800">{item.pemilik}</span></p>
+          </div>
+
+          <div class="border-y border-slate-100 py-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <span class="text-xs text-slate-400 font-medium block">Kisaran Harga</span>
+              <span class="text-lg font-bold text-emerald-700">{item.harga}</span>
+            </div>
+            <div>
+              <span class="text-xs text-slate-400 font-medium block">Kontak Utilitas</span>
+              <span class="text-sm font-semibold text-slate-700">{item.telepon}</span>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <h2 class="text-lg font-bold text-slate-800">Deskripsi Usaha</h2>
+            <p class="text-slate-600 leading-relaxed">{item.deskripsi}</p>
+          </div>
+
+          <!-- TOMBOL AKSI HUBUNGI -->
+          <div class="pt-4">
+            <a href={`https://wa.me/${item.telepon}`} target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all">
+              💬 Hubungi Pemilik via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- REKOMENDASI UMKM SEJENIS -->
+      {umkmSejenis.length > 0 && (
+        <div class="space-y-4">
+          <h2 class="text-xl font-bold text-slate-800">UMKM Sejenis di Kategori {item.kategori}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {umkmSejenis.map((sejenis) => (
+              <a href={`/umkm/${sejenis.id}`} class="bg-white p-4 rounded-2xl border border-slate-200 flex gap-4 hover:shadow-md transition-shadow">
+                <img src={sejenis.gambar} alt={sejenis.nama} class="w-20 h-20 rounded-xl object-cover" />
+                <div>
+                  <h3 class="font-bold text-slate-800 text-sm">{sejenis.nama}</h3>
+                  <p class="text-xs text-slate-500 mt-1">{sejenis.harga}</p>
+                  <span class="text-xs text-emerald-600 font-semibold mt-2 inline-block">Lihat Detail →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+    </div>
+  </main>
+</Layout>

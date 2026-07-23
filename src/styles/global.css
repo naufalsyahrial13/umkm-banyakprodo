@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --color-canvas: #F5F1E8;
+  --color-surface: #FFFDF8;
+  --color-line: #E6DFD1;
+
+  --color-ink: #2A2521;
+  --color-ink-soft: #6B5F52;
+  --color-ink-faint: #A89C8C;
+
+  --color-indigo-50: #EEF0F6;
+  --color-indigo-100: #D6DBE8;
+  --color-indigo-500: #37456A;
+  --color-indigo-600: #2D3B5C;
+  --color-indigo-700: #212B45;
+
+  --color-soga-50: #FBEEE3;
+  --color-soga-100: #F3D9BF;
+  --color-soga-500: #B5652E;
+  --color-soga-600: #9A5324;
+
+  --color-sawah-50: #EEF3E9;
+  --color-sawah-100: #D7E4CC;
+  --color-sawah-500: #5C7A4A;
+  --color-sawah-600: #4A6339;
+
+  --color-alert-500: #C0503F;
+  --color-alert-600: #A73F30;
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+/* Motif garis diagonal terinspirasi corak batik parang, dipakai sebagai
+   tekstur halus di background hero (lihat index.astro) */
+.batik-motif {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='1.2' opacity='0.14'%3E%3Cpath d='M0 56L56 0'/%3E%3Cpath d='M-14 14L14 -14'/%3E%3Cpath d='M42 70L70 42'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.hero-shadow {
+  text-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Scroll-reveal utility (dipakai di card UMKM) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

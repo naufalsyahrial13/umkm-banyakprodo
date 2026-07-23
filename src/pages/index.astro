@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import UmkmCard from '../components/umkm/UmkmCard.astro';
+import umkmData from '../data/umkm.json';
+
+const totalUmkm = umkmData.length;
+const totalKategori = new Set(umkmData.map(u => u.kategori)).size;
+const totalNib = umkmData.filter(u => u.nib).length;
+
+const listKategoriUnik = [...new Set(umkmData.map(u => u.kategori))];
+---
+
+<Layout title="Direktori UMKM Desa Banyakprodo" description="Mendukung potensi produk lokal, kerajinan, dan kuliner unggulan warga Desa Banyakprodo, Kecamatan Tirtomoyo, Wonogiri." gambar="/peta-banyakprodo.jpeg">
+  <main class="min-h-screen bg-canvas text-ink">
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-indigo-700 to-indigo-500 text-white py-16 px-4 sm:px-6 lg:px-8 shadow-md">
+      <div class="batik-motif absolute inset-0 pointer-events-none"></div>
+      <div class="relative max-w-6xl mx-auto text-center space-y-4">
+        <span class="inline-block bg-soga-500/25 backdrop-blur-sm text-soga-50 text-sm font-semibold px-4 py-1.5 rounded-full border border-soga-100/30">
+          Official Directory • KKN Universitas Diponegoro
+        </span>
+        <h1 class="hero-shadow text-4xl sm:text-5xl font-extrabold tracking-tight">
+          Direktori UMKM Desa Banyakprodo
+        </h1>
+        <p class="text-indigo-50 text-lg max-w-2xl mx-auto font-light">
+          Mendukung potensi produk lokal, kerajinan, dan kuliner unggulan warga Desa Banyakprodo, Kecamatan Tirtomoyo, Wonogiri.
+        </p>
+      </div>
+    </section>
+
+    <!-- STATISTIK RINGKAS -->
+    <section class="max-w-6xl mx-auto -mt-8 px-4 sm:px-6 relative z-10">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 bg-surface p-6 rounded-2xl shadow-lg border border-line">
+        <div class="text-center p-3">
+          <p class="text-3xl font-black text-indigo-600">{totalUmkm}</p>
+          <p class="text-xs sm:text-sm text-ink-soft font-medium mt-1">Total UMKM Terdata</p>
+        </div>
+        <div class="text-center p-3 border-x border-line">
+          <p class="text-3xl font-black text-indigo-600">{totalKategori}</p>
+          <p class="text-xs sm:text-sm text-ink-soft font-medium mt-1">Sektor Kategori</p>
+        </div>
+        <div class="text-center p-3 col-span-2 md:col-span-1 border-t md:border-t-0 border-line">
+          <p class="text-3xl font-black text-indigo-600">{totalNib}</p>
+          <p class="text-xs sm:text-sm text-ink-soft font-medium mt-1">Bersertifikat NIB</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENTANG DESA & PETA -->
+    <section id="tentang-desa" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <div class="bg-surface rounded-3xl p-8 md:p-12 shadow-sm border border-line flex flex-col lg:flex-row gap-10 items-center">
+
+        <div class="lg:w-1/2 space-y-5">
+          <div class="inline-flex items-center justify-center p-3 bg-indigo-50 text-indigo-600 rounded-xl mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-ink">Tentang Desa Banyakprodo</h2>
+          <p class="text-ink-soft leading-relaxed">
+            Desa Banyakprodo terletak di Kecamatan Tirtomoyo, Kabupaten Wonogiri. Di wilayah ini berkembang berbagai Usaha Mikro, Kecil, dan Menengah (UMKM) yang menjadi penopang perekonomian masyarakat setempat.
+          </p>
+          <p class="text-ink-soft leading-relaxed">
+            Keberadaan UMKM ini tidak hanya membantu meningkatkan pendapatan warga, tetapi juga mendorong terciptanya lapangan kerja baru serta memperkenalkan kearifan lokal Banyakprodo ke khalayak luas.
+          </p>
+        </div>
+
+        <div class="lg:w-1/2 w-full">
+          <div class="relative bg-surface rounded-2xl p-3 border border-line shadow-sm group">
+
+            <div id="openModalBtn" class="absolute top-6 right-6 z-10 bg-surface/90 hover:bg-surface text-ink-soft text-xs font-semibold px-3 py-1.5 rounded-lg shadow-md border border-line flex items-center gap-1.5 cursor-pointer transition-all hover:scale-105">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+              Klik untuk perbesar
+            </div>
+
+            <div id="mapThumb" class="relative overflow-hidden rounded-xl h-72 sm:h-80 w-full bg-canvas flex items-center justify-center cursor-pointer">
+              <img
+                src="/peta-banyakprodo.jpeg"
+                alt="Peta Wilayah Desa Banyakprodo"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            <div class="mt-3 flex items-center justify-between px-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 animate-pulse"></span>
+                <span class="text-xs font-bold text-ink-soft">Peta Wilayah Desa Banyakprodo, Tirtomoyo</span>
+              </div>
+              <span class="text-xs text-ink-faint font-medium">KKN Tim II Undip</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- KATALOG UMKM DENGAN LIVE SEARCH & FILTER -->
+    <section id="katalog" class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <div class="mb-10 text-center">
+        <h2 class="text-3xl font-bold text-ink">Daftar Usaha Lokal</h2>
+        <p class="text-ink-soft mt-2">Katalog lengkap produk kebanggaan warga Banyakprodo</p>
+      </div>
+
+      <div class="max-w-xl mx-auto mb-8 relative">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-ink-faint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari nama UMKM atau produk..."
+          class="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-line focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all text-ink bg-surface"
+        />
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-2 mb-12" id="filterContainer">
+        <button class="filter-btn active bg-indigo-600 text-white border-transparent px-5 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm" data-kategori="semua">
+          Semua
+        </button>
+        {listKategoriUnik.map((kategori) => (
+          <button class="filter-btn bg-surface text-ink-soft border-line border hover:bg-indigo-50 hover:text-indigo-600 px-5 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm" data-kategori={kategori.toLowerCase()}>
+            {kategori}
+          </button>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="umkmGrid">
+        {umkmData.map((item, i) => (
+          <UmkmCard item={item} index={i} variant="full" />
+        ))}
+      </div>
+
+      <div id="noResults" class="hidden text-center py-12">
+        <p class="text-ink-soft text-lg">Maaf, UMKM yang kamu cari tidak ditemukan.</p>
+        <button id="resetSearch" class="mt-4 text-indigo-600 font-semibold hover:underline">Reset Pencarian</button>
+      </div>
+    </section>
+
+    <!-- MODAL POPUP PREVIEW PETA -->
+    <div id="mapModal" class="fixed inset-0 z-50 bg-ink/70 backdrop-blur-sm hidden items-center justify-center p-4">
+      <div class="bg-surface rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+
+        <div class="flex items-center justify-between px-6 py-4 border-b border-line">
+          <h3 class="font-bold text-lg text-ink">Peta Persebaran & Wilayah Desa Banyakprodo</h3>
+          <button id="closeModalBtn" class="w-9 h-9 rounded-full bg-canvas hover:bg-line text-ink-soft flex items-center justify-center font-bold text-lg transition-colors">
+            ✕
+          </button>
+        </div>
+
+        <div class="p-4 overflow-auto flex-1 flex items-center justify-center bg-canvas">
+          <img src="/peta-banyakprodo.jpeg" alt="Peta Desa Banyakprodo Full" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-sm" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCRIPT LOGIKA LIVE SEARCH, FILTER & MODAL PETA -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const mapModal = document.getElementById('mapModal');
+        const mapThumb = document.getElementById('mapThumb');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openModal() {
+          mapModal?.classList.remove('hidden');
+          mapModal?.classList.add('flex');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+          mapModal?.classList.add('hidden');
+          mapModal?.classList.remove('flex');
+          document.body.style.overflow = 'auto';
+        }
+
+        mapThumb?.addEventListener('click', openModal);
+        openModalBtn?.addEventListener('click', openModal);
+        closeModalBtn?.addEventListener('click', closeModal);
+
+        mapModal?.addEventListener('click', (e) => {
+          if (e.target === mapModal) {
+            closeModal();
+          }
+        });
+
+        const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.umkm-card') as NodeListOf<HTMLElement>;
+        const noResults = document.getElementById('noResults');
+        const resetSearch = document.getElementById('resetSearch');
+
+        let currentCategory = 'semua';
+        let searchQuery = '';
+
+        function filterCards() {
+          let visibleCount = 0;
+
+          cards.forEach(card => {
+            const nama = card.getAttribute('data-nama') || '';
+            const kategori = card.getAttribute('data-kategori') || '';
+
+            const matchesSearch = nama.includes(searchQuery);
+            const matchesCategory = currentCategory === 'semua' || kategori === currentCategory;
+
+            if (matchesSearch && matchesCategory) {
+              card.style.display = 'flex';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          if (visibleCount === 0) {
+            noResults?.classList.remove('hidden');
+          } else {
+            noResults?.classList.add('hidden');
+          }
+        }
+
+        searchInput?.addEventListener('input', (e) => {
+          const target = e.target as HTMLInputElement;
+          searchQuery = target.value.toLowerCase().trim();
+          filterCards();
+        });
+
+        filterBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const target = e.currentTarget as HTMLElement;
+
+            filterBtns.forEach(b => {
+              b.classList.remove('bg-indigo-600', 'text-white', 'border-transparent');
+              b.classList.add('bg-surface', 'text-ink-soft', 'border-line');
+            });
+
+            target.classList.remove('bg-surface', 'text-ink-soft', 'border-line');
+            target.classList.add('bg-indigo-600', 'text-white', 'border-transparent');
+
+            currentCategory = target.getAttribute('data-kategori') || 'semua';
+            filterCards();
+          });
+        });
+
+        resetSearch?.addEventListener('click', () => {
+          searchInput.value = '';
+          searchQuery = '';
+          const btnSemua = document.querySelector('[data-kategori="semua"]') as HTMLElement;
+          btnSemua?.click();
+        });
+      });
+    </script>
+
+  </main>
+</Layout>

@@ -1,0 +1,65 @@
+---
+interface Props {
+  item: any;
+  index?: number;
+  variant?: 'full' | 'compact';
+}
+
+const { item, index = 0, variant = 'full' } = Astro.props;
+const thumbnail = item.galeri?.[0] || '';
+---
+
+{variant === 'full' ? (
+  <div
+    class="umkm-card reveal bg-surface rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+    data-nama={item.nama.toLowerCase()}
+    data-kategori={item.kategori.toLowerCase()}
+    style={`transition-delay: ${(index % 3) * 100}ms`}
+  >
+    <div class="relative h-56 w-full bg-canvas overflow-hidden">
+      <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
+      <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md text-ink text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm">{item.kategori}</span>
+      {item.halal && (
+        <span class="absolute top-4 right-4 bg-sawah-500 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm">✓ HALAL</span>
+      )}
+    </div>
+    <div class="p-6 flex-1 flex flex-col justify-between">
+      <div>
+        <h3 class="text-xl font-bold text-ink">{item.nama}</h3>
+        <p class="text-xs text-ink-faint font-medium mb-3">Pemilik: <span class="text-ink-soft">{item.pemilik}</span></p>
+        <p class="text-ink-soft text-sm line-clamp-2 mb-4 leading-relaxed">{item.deskripsi}</p>
+      </div>
+      <div class="pt-4 border-t border-line space-y-4">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-ink-faint font-medium">Mulai dari</span>
+          <span class="font-bold text-soga-600 bg-soga-50 px-2.5 py-1 rounded-lg">{item.harga.split(' - ')[0]}</span>
+        </div>
+        <a href={`/umkm/${item.id}`} class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl text-sm flex items-center justify-center transition-colors shadow-sm">
+          Lihat Detail & Kontak
+        </a>
+      </div>
+    </div>
+  </div>
+) : (
+  <div
+    class="reveal bg-surface rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+    style={`transition-delay: ${(index % 3) * 100}ms`}
+  >
+    <div class="relative h-48 w-full bg-canvas overflow-hidden">
+      <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
+      <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+    </div>
+    <div class="p-5 flex-1 flex flex-col justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-ink line-clamp-1">{item.nama}</h3>
+        <p class="text-soga-600 font-semibold text-sm mt-1">{item.harga.split(' - ')[0]}</p>
+      </div>
+      <div class="mt-4 pt-4 border-t border-line">
+        <a href={`/umkm/${item.id}`} class="w-full bg-canvas hover:bg-indigo-600 hover:text-white text-ink-soft font-semibold py-2.5 px-4 rounded-xl text-sm flex items-center justify-center transition-colors">
+          Lihat Detail
+        </a>
+      </div>
+    </div>
+  </div>
+)}

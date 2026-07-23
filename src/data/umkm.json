@@ -1,0 +1,341 @@
+[
+  {
+    "id": "tahu-bakso-jeng-ratih",
+    "nama": "Tahu Bakso Jeng Ratih",
+    "kategori": "Kuliner",
+    "pemilik": "Ibu Ratih",
+    "telepon": "6281234567890",
+    "harga": "Rp 15.000 - Rp 35.000",
+    "deskripsi": "Tahu bakso khas Banyakprodo dengan isian daging sapi murni bertekstur lembut dan gurih tanpa bahan pengawet.",
+    "halal": true,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "tahubakso_jengratih",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 02 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "07:00",
+      "tutup": "17:00",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": true
+    }
+  },
+  {
+    "id": "kerajinan-bambu-pak-parto",
+    "nama": "Kerajinan Bambu Pak Parto",
+    "kategori": "Kerajinan",
+    "pemilik": "Bapak Suparto",
+    "telepon": "6282198765432",
+    "harga": "Rp 20.000 - Rp 150.000",
+    "deskripsi": "Anyaman bambu tradisional berkualitas tinggi seperti anyaman tempat nasi, besek hampers, dan hiasan dinding.",
+    "halal": false,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "",
+    "facebook": "KerajinanBambuBanyakprodo",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 05 / RW 02, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "08:00",
+      "tutup": "16:00",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": false
+    }
+  },
+  {
+    "id": "keripik-singkong-renyah",
+    "nama": "Keripik Singkong Mbah Joyo",
+    "kategori": "Kuliner",
+    "pemilik": "Bapak Joyo",
+    "telepon": "6285712344321",
+    "harga": "Rp 10.000 - Rp 25.000",
+    "deskripsi": "Keripik singkong renyah dengan aneka rasa (Original, Balado, Keju) menggunakan singkong lokal olahan warga.",
+    "halal": true,
+    "nib": false,
+    "galeri": ["https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "keripik_mbahjoyo",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 01 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "06:00",
+      "tutup": "18:00",
+      "hariBuka": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": true
+    }
+  },
+  {
+    "id": "batik-tulis-banyakprodo",
+    "nama": "Batik Tulis Tirtomoyo",
+    "kategori": "Fashion",
+    "pemilik": "Ibu Maryati",
+    "telepon": "6281399887766",
+    "harga": "Rp 150.000 - Rp 500.000",
+    "deskripsi": "Kain batik tulis bermotif khas daerah Tirtomoyo menggunakan pewarna alam yang ramah lingkungan.",
+    "halal": false,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1606744888344-493238951221?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "batik_banyakprodo",
+    "facebook": "BatikTirtomoyo",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 03 / RW 02, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "09:00",
+      "tutup": "15:00",
+      "hariBuka": [
+        1,
+        3,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": true
+    }
+  },
+  {
+    "id": "kopi-robusta-wonogiri",
+    "nama": "Kopi Robusta Banyakprodo",
+    "kategori": "Minuman",
+    "pemilik": "Mas Hendra",
+    "telepon": "6287711223344",
+    "harga": "Rp 25.000 - Rp 60.000",
+    "deskripsi": "Biji kopi robusta pilihan dipetik dari perkebunan lokal dan di-roasting dengan tingkat kematangan medium to dark.",
+    "halal": true,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "kopi_banyakprodo",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 04 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "07:30",
+      "tutup": "17:30",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": false
+    }
+  },
+  {
+    "id": "sambal-pecel-mbok-murni",
+    "nama": "Sambal Pecel Mbok Murni",
+    "kategori": "Kuliner",
+    "pemilik": "Ibu Murni",
+    "telepon": "6289655443322",
+    "harga": "Rp 12.000 - Rp 30.000",
+    "deskripsi": "Bumbu pecel resep turun-temurun dari kacang tanah sangrai berkualitas dan rempah pilihan.",
+    "halal": true,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1596797882870-8c33deeac224?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 01 / RW 02, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "08:00",
+      "tutup": "20:00",
+      "hariBuka": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": true
+    }
+  },
+  {
+    "id": "mubel-kayu-jati",
+    "nama": "Mubel Jati Barokah",
+    "kategori": "Furniture",
+    "pemilik": "Bapak Slamet",
+    "telepon": "6281223344556",
+    "harga": "Rp 300.000 - Rp 3.000.000",
+    "deskripsi": "Kerajinan mebel kayu jati perhutani tahan lama seperti kursi, meja, dan lemari pakaian ukir.",
+    "halal": false,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "mubel_jatibarokah",
+    "facebook": "MubelJatiBarokah",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 06 / RW 02, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "08:00",
+      "tutup": "16:00",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": false
+    }
+  },
+  {
+    "id": "jamu-gendong-sehat-segar",
+    "nama": "Jamu Herbal Bu Tini",
+    "kategori": "Minuman",
+    "pemilik": "Ibu Tini",
+    "telepon": "6283899001122",
+    "harga": "Rp 5.000 - Rp 20.000",
+    "deskripsi": "Minuman jamu tradisional botolan seperti Kunyit Asam, Beras Kencur, dan Temulawak tanpa bahan pemanis buatan.",
+    "halal": true,
+    "nib": false,
+    "galeri": ["https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 02 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "05:00",
+      "tutup": "10:00",
+      "hariBuka": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": false
+    }
+  },
+  {
+    "id": "madu-murni-al-barokah",
+    "nama": "Madu Murni Hutan Banyakprodo",
+    "kategori": "Pertanian",
+    "pemilik": "Mas Agus",
+    "telepon": "6285211223344",
+    "harga": "Rp 65.000 - Rp 130.000",
+    "deskripsi": "Madu ternak lebah murni mentah (raw honey) terjamin keasliannya kaya akan kebaikan untuk imun tubuh.",
+    "halal": true,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "madu_banyakprodo",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 03 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "08:00",
+      "tutup": "17:00",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": true
+    }
+  },
+  {
+    "id": "olahan-jamur-tiram",
+    "nama": "Olahan Jamur Tiram Makmur",
+    "kategori": "Kuliner",
+    "pemilik": "Ibu Wiwik",
+    "telepon": "6281344556677",
+    "harga": "Rp 8.000 - Rp 20.000",
+    "deskripsi": "Jamur tiram crispy gurih renyah dan baglog budidaya jamur tiram siap rawat untuk usaha rumahan.",
+    "halal": true,
+    "nib": true,
+    "galeri": ["https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop&q=80"],
+    "maps": "https://maps.google.com",
+    "instagram": "jamur_makmur",
+    "facebook": "",
+    "dusun": "-- Isi Nama Dusun --",
+    "alamatDetail": "RT 05 / RW 01, Desa Banyakprodo",
+    "tiktok": "",
+    "jamOperasional": {
+      "buka": "07:00",
+      "tutup": "16:00",
+      "hariBuka": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "pembayaran": {
+      "cash": true,
+      "qris": false
+    }
+  }
+]
