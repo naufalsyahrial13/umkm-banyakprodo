@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Halaman Tidak Ditemukan - UMKM Banyakprodo" description="Halaman yang kamu cari tidak ditemukan.">
+  <main class="min-h-screen bg-canvas">
+
+    <!-- HERO 404 -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-indigo-700 to-indigo-500 text-white py-20 px-4 sm:px-6 lg:px-8 shadow-md">
+      <div class="batik-motif absolute inset-0 pointer-events-none"></div>
+      <div class="relative max-w-lg mx-auto text-center space-y-5">
+        <div class="flex justify-center">
+          <div class="flex items-center justify-center w-20 h-20 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.5-7-11a7 7 0 1114 0c0 4.5-7 11-7 11z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 8.5l3 3m0-3l-3 3" />
+            </svg>
+          </div>
+        </div>
+        <span class="inline-block bg-soga-500/25 backdrop-blur-sm text-soga-50 text-sm font-semibold px-4 py-1.5 rounded-full border border-soga-100/30">
+          Error 404
+        </span>
+        <h1 class="hero-shadow text-3xl sm:text-4xl font-extrabold tracking-tight">
+          Halaman Ini Belum Terdata
+        </h1>
+        <p class="text-indigo-50 text-base max-w-md mx-auto font-light">
+          Sepertinya kamu tersasar sebelum sampai tujuan. Halaman yang kamu cari mungkin sudah dipindah, salah alamat, atau memang belum tersedia di direktori kami.
+        </p>
+      </div>
+    </section>
+
+    <!-- CTA MELAYANG -->
+    <section class="max-w-lg mx-auto px-4 -mt-8 relative z-10 pb-20">
+      <div class="bg-surface rounded-2xl shadow-lg border border-line p-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl text-sm shadow-sm transition-colors text-center">
+          Kembali ke Beranda
+        </a>
+        <a href="/#katalog" class="bg-canvas border border-line hover:bg-line/40 text-ink font-semibold px-6 py-3 rounded-xl text-sm shadow-sm transition-colors text-center">
+          Lihat Katalog UMKM
+        </a>
+      </div>
+    </section>
+
+  </main>
+</Layout>

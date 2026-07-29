@@ -14,8 +14,6 @@ const {
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 
-const nomorWhatsAppTim = "6281234567890";
-
 const gambarUrl = new URL(gambar, Astro.site ?? Astro.url).toString();
 const urlHalaman = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString();
 ---
@@ -91,7 +89,7 @@ const urlHalaman = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString
           <ul class="space-y-2 text-sm">
             <li><a href="/" class="hover:text-soga-100 transition-colors">Beranda</a></li>
             <li><a href="/#katalog" class="hover:text-soga-100 transition-colors">Katalog UMKM</a></li>
-            <li><a href="/tentang" class="hover:text-soga-100 transition-colors">Tim KKN</a></li>
+            <li><a href="/tentang" class="hover:text-soga-100 transition-colors">Tentang Kami</a></li>
           </ul>
         </div>
 
@@ -99,11 +97,6 @@ const urlHalaman = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString
           <h4 class="text-surface font-semibold text-sm uppercase tracking-wider">Kontak</h4>
           <ul class="space-y-2 text-sm">
             <li>📍 Desa Banyakprodo, Kec. Tirtomoyo, Kab. Wonogiri</li>
-            <li>
-              <a href={`https://wa.me/${nomorWhatsAppTim}`} target="_blank" class="hover:text-soga-100 transition-colors">
-                💬 Hubungi Tim KKN via WhatsApp
-              </a>
-            </li>
           </ul>
         </div>
 
@@ -114,17 +107,6 @@ const urlHalaman = new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString
         <p>Dibangun sebagai program kerja Penguatan UMKM Desa Banyakprodo.</p>
       </div>
     </footer>
-
-    <!-- FLOATING WHATSAPP BUTTON -->
-    
-      <a href={`https://wa.me/${nomorWhatsAppTim}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="fixed bottom-6 right-6 z-40 bg-sawah-500 hover:bg-sawah-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
-      aria-label="Hubungi via WhatsApp"
-    >
-      <span class="text-2xl">💬</span>
-    </a>
 
     <!-- SCROLL REVEAL (berlaku di semua halaman) -->
     <script>
