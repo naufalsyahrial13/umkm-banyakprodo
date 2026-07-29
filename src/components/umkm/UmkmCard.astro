@@ -1,4 +1,6 @@
 ---
+import KategoriIcon from './KategoriIcon.astro';
+
 interface Props {
   item: any;
   index?: number;
@@ -7,6 +9,17 @@ interface Props {
 
 const { item, index = 0, variant = 'full' } = Astro.props;
 const thumbnail = item.galeri?.[0] || '';
+
+const KATEGORI_META: Record<string, { warna: string; icon: string }> = {
+  kuliner:   { warna: 'bg-soga-500 text-white',   icon: 'kuliner' },
+  minuman:   { warna: 'bg-soga-500 text-white',   icon: 'minuman' },
+  kerajinan: { warna: 'bg-indigo-600 text-white', icon: 'kerajinan' },
+  fashion:   { warna: 'bg-indigo-600 text-white', icon: 'fashion' },
+  furniture: { warna: 'bg-indigo-600 text-white', icon: 'furniture' },
+  pertanian: { warna: 'bg-sawah-500 text-white',  icon: 'pertanian' },
+  lainnya:   { warna: 'bg-ink text-white',        icon: 'lainnya' },
+};
+const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META.lainnya;
 ---
 
 {variant === 'full' ? (
@@ -19,7 +32,10 @@ const thumbnail = item.galeri?.[0] || '';
     <div class="relative h-56 w-full bg-canvas overflow-hidden">
       <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
       <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-      <span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md text-ink text-xs font-semibold px-3 py-1.5 rounded-lg shadow-sm">{item.kategori}</span>
+      <span class={`absolute top-4 left-4 ${kategoriMeta.warna} backdrop-blur-md text-xs font-bold pl-2 pr-3 py-1.5 rounded-lg shadow-sm inline-flex items-center gap-1.5`}>
+        <KategoriIcon icon={kategoriMeta.icon} class="h-3.5 w-3.5" />
+        {item.kategori}
+      </span>
       {item.halal && (
         <span class="absolute top-4 right-4 bg-sawah-500 text-white text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm">✓ HALAL</span>
       )}
