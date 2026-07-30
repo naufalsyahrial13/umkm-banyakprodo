@@ -85,6 +85,14 @@ const umkmSejenis = umkmData.filter(
                     📱 QRIS
                   </span>
                 )}
+                {item.pembayaran?.transfer && (
+                  <span class="bg-sawah-50 text-sawah-600 text-xs font-bold px-2.5 py-1 rounded-lg border border-sawah-100">
+                    🏦 Transfer
+                  </span>
+                )}
+                {!item.pembayaran?.cash && !item.pembayaran?.qris && !item.pembayaran?.transfer && (
+                  <span class="text-ink-faint text-xs font-medium">Belum diketahui</span>
+                )}
               </div>
             </div>
           </div>
@@ -138,25 +146,38 @@ const umkmSejenis = umkmData.filter(
               <span class="text-sm font-bold text-ink">
                 {item.halal ? "Halal" : "-"}{item.nib ? " · NIB" : ""}
               </span>
+              {item.nib && item.nomorNib && (
+                <span class="text-[11px] text-ink-faint block mt-0.5">No. {item.nomorNib}</span>
+              )}
             </div>
             <div>
               <span class="text-xs text-ink-faint font-medium block">Jam Operasional</span>
               <span class="text-sm font-bold text-ink">
-                {item.jamOperasional?.buka} - {item.jamOperasional?.tutup}
+                {item.jamOperasional?.buka && item.jamOperasional?.tutup
+                  ? (item.jamOperasional.buka === "00:00" && item.jamOperasional.tutup === "23:59"
+                      ? "24 Jam"
+                      : `${item.jamOperasional.buka} - ${item.jamOperasional.tutup}`)
+                  : "Belum tersedia"}
               </span>
             </div>
           </div>
 
           <div class="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href={`https://wa.me/${item.telepon}`} target="_blank" class="w-full bg-sawah-500 hover:bg-sawah-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm">
-              💬 Hubungi WhatsApp
-            </a>
-            <a href={item.maps} target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm">
-              📍 Buka di Google Maps
-            </a>
-            <button onclick={`navigator.clipboard.writeText('${item.telepon}'); alert('Nomor kontak berhasil disalin!');`} class="w-full bg-canvas hover:bg-line/40 text-ink-soft font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm border border-line">
-              📋 Salin Kontak
-            </button>
+            {item.telepon && (
+              <a href={`https://wa.me/${item.telepon}`} target="_blank" class="w-full bg-sawah-500 hover:bg-sawah-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm">
+                💬 Hubungi WhatsApp
+              </a>
+            )}
+            {item.maps && (
+              <a href={item.maps} target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm">
+                📍 Buka di Google Maps
+              </a>
+            )}
+            {item.telepon && (
+              <button onclick={`navigator.clipboard.writeText('${item.telepon}'); alert('Nomor kontak berhasil disalin!');`} class="w-full bg-canvas hover:bg-line/40 text-ink-soft font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm border border-line">
+                📋 Salin Kontak
+              </button>
+            )}
             <button onclick={`if(navigator.share){navigator.share({title: '${item.nama}', url: window.location.href})}else{alert('Fitur bagikan tidak didukung di browser ini.')}`} class="w-full bg-canvas hover:bg-line/40 text-ink-soft font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-sm border border-line">
               🔗 Bagikan UMKM
             </button>

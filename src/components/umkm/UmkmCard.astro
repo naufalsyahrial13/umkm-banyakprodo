@@ -17,6 +17,7 @@ const KATEGORI_META: Record<string, { warna: string; icon: string }> = {
   fashion:   { warna: 'bg-indigo-600 text-white', icon: 'fashion' },
   furniture: { warna: 'bg-indigo-600 text-white', icon: 'furniture' },
   pertanian: { warna: 'bg-sawah-500 text-white',  icon: 'pertanian' },
+  perikanan: { warna: 'bg-sawah-500 text-white',  icon: 'perikanan' },
   lainnya:   { warna: 'bg-ink text-white',        icon: 'lainnya' },
 };
 const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META.lainnya;
@@ -30,8 +31,17 @@ const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META
     style={`transition-delay: ${(index % 3) * 100}ms`}
   >
     <div class="relative h-56 w-full bg-canvas overflow-hidden">
-      <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
-      <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      {thumbnail ? (
+        <>
+          <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
+          <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </>
+      ) : (
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-canvas gap-2">
+          <KategoriIcon icon={kategoriMeta.icon} class="h-9 w-9 text-indigo-300" />
+          <span class="text-[11px] font-semibold text-ink-faint">Foto segera hadir</span>
+        </div>
+      )}
       <span class={`absolute top-4 left-4 ${kategoriMeta.warna} backdrop-blur-md text-xs font-bold pl-2 pr-3 py-1.5 rounded-lg shadow-sm inline-flex items-center gap-1.5`}>
         <KategoriIcon icon={kategoriMeta.icon} class="h-3.5 w-3.5" />
         {item.kategori}
@@ -63,8 +73,17 @@ const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META
     style={`transition-delay: ${(index % 3) * 100}ms`}
   >
     <div class="relative h-48 w-full bg-canvas overflow-hidden">
-      <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
-      <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      {thumbnail ? (
+        <>
+          <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
+          <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </>
+      ) : (
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-canvas gap-1.5">
+          <KategoriIcon icon={kategoriMeta.icon} class="h-7 w-7 text-indigo-300" />
+          <span class="text-[10px] font-semibold text-ink-faint">Foto segera hadir</span>
+        </div>
+      )}
     </div>
     <div class="p-5 flex-1 flex flex-col justify-between">
       <div>
