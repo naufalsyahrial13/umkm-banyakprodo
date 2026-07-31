@@ -1,0 +1,66 @@
+import { createClient } from '@sanity/client';
+
+export interface UmkmItem {
+  id: string;
+  nama: string;
+  kategori: string;
+  pemilik: string;
+  telepon: string;
+  harga: string;
+  deskripsi: string;
+  halal: boolean;
+  nib: boolean;
+  nomorNib: string;
+  galeri: string[];
+  maps: string;
+  instagram: string;
+  facebook: string;
+  tiktok: string;
+  video: string;
+  dusun: string;
+  alamatDetail: string;
+  jamOperasional: {
+    buka: string;
+    tutup: string;
+    hariBuka: number[];
+  };
+  pembayaran: {
+    cash: boolean;
+    qris: boolean;
+    transfer: boolean;
+  };
+}
+
+export const sanityClient = createClient({
+  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
+  dataset: import.meta.env.PUBLIC_SANITY_DATASET,
+  apiVersion: '2024-01-01',
+  useCdn: true,
+});
+
+const QUERY_ALL_UMKM = `*[_type == "umkm"] | order(nama asc) {
+  "id": slug.current,
+  nama,
+  kategori,
+  pemilik,
+  telepon,
+  harga,
+  deskripsi,
+  halal,
+  nib,
+  nomorNib,
+  "galeri": galeri[].asset->url,
+  maps,
+  instagram,
+  facebook,
+  tiktok,
+  video,
+  dusun,
+  alamatDetail,
+  jamOperasional,
+  pembayaran
+}`;
+
+export async function getUmkmData(): Promise<UmkmItem[]> {
+  return await sanityClient.fetch<UmkmItem[]>(QUERY_ALL_UMKM);
+}

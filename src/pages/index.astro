@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import UmkmCard from '../components/umkm/UmkmCard.astro';
-import umkmData from '../data/umkm.json';
+import { getUmkmData } from '../lib/sanity';
 
+const umkmData = await getUmkmData();
 const totalUmkm = umkmData.length;
 const totalKategori = new Set(umkmData.map(u => u.kategori)).size;
 const totalNib = umkmData.filter(u => u.nib).length;

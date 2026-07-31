@@ -4,20 +4,22 @@ import UmkmCard from '../../components/umkm/UmkmCard.astro';
 import GaleriFoto from '../../components/umkm/GaleriFoto.astro';
 import VideoUsaha from '../../components/umkm/VideoUsaha.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
-import umkmData from '../../data/umkm.json';
+import { getUmkmData } from '../../lib/sanity';
+
+export const prerender = true;
 
 export async function getStaticPaths() {
+  const umkmData = await getUmkmData();
   return umkmData.map((item) => ({
     params: { id: item.id },
-    props: { item },
+    props: {
+      item,
+      umkmSejenis: umkmData.filter((u) => u.kategori === item.kategori && u.id !== item.id),
+    },
   }));
 }
 
-const { item } = Astro.props;
-
-const umkmSejenis = umkmData.filter(
-  (u) => u.kategori === item.kategori && u.id !== item.id
-);
+const { item, umkmSejenis } = Astro.props;
 ---
 
 <Layout
