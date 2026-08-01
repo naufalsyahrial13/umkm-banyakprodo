@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { getInformasiData } from '../lib/sanity';
+
+export const prerender = true;
+
+const informasiData = await getInformasiData();
+---
+
+<Layout title="Informasi & Peraturan - UMKM Banyakprodo" description="Informasi dan peraturan penting untuk warga Desa Banyakprodo">
+  <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto space-y-8">
+      <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Informasi & Peraturan" }]} />
+
+      <div>
+        <h1 class="text-3xl font-extrabold text-ink">Informasi & Peraturan</h1>
+        <p class="text-ink-soft mt-1">Rangkuman informasi dan peraturan yang perlu diketahui warga.</p>
+      </div>
+
+      {informasiData.length === 0 ? (
+        <div class="bg-surface rounded-3xl p-10 text-center border border-line">
+          <p class="text-ink-faint font-medium">Belum ada informasi yang diposting.</p>
+        </div>
+      ) : (
+        <div class="space-y-5">
+          {informasiData.map((info) => (
+            <div class="bg-surface rounded-3xl p-6 border border-line shadow-sm space-y-2">
+              <span class="inline-block bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-lg">
+                {info.kategori}
+              </span>
+              <h2 class="text-lg font-bold text-ink">{info.judul}</h2>
+              <p class="text-ink-soft leading-relaxed whitespace-pre-line">{info.isi}</p>
+              {info.sumber && (
+                <p class="text-ink-faint text-xs font-medium pt-1">Sumber: {info.sumber}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+</Layout>

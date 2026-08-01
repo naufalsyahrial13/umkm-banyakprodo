@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const faq = [
+  {
+    q: "Website ini isinya apa saja?",
+    a: "Website ini berisi direktori UMKM Desa Banyakprodo, info Kegiatan Terkini warga, serta Informasi & Peraturan yang perlu diketahui warga.",
+  },
+  {
+    q: "Bagaimana cara mencari UMKM tertentu?",
+    a: "Buka menu \"Katalog UMKM\" di beranda, lalu gunakan filter Kategori atau Kelas untuk mempersempit pencarian sesuai jenis usaha yang dicari.",
+  },
+  {
+    q: "Bagaimana cara menghubungi pemilik UMKM?",
+    a: "Buka halaman detail UMKM yang diinginkan, lalu klik tombol \"Hubungi WhatsApp\" atau \"Salin Kontak\". Jika tombol tidak muncul, artinya nomor kontak belum tersedia, silakan datang langsung ke lokasi usaha.",
+  },
+  {
+    q: "Apa itu menu Kegiatan Terkini?",
+    a: "Kumpulan info dan dokumentasi kegiatan warga Desa Banyakprodo, seperti gotong royong, perlombaan, dan pengumuman terbaru.",
+  },
+  {
+    q: "Apa itu menu Informasi?",
+    a: "Rangkuman informasi dan peraturan penting yang perlu diketahui warga, termasuk rujukan peraturan Kabupaten Wonogiri.",
+  },
+];
+---
+
+<Layout title="Bantuan - UMKM Banyakprodo" description="Panduan penggunaan website UMKM Banyakprodo">
+  <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto space-y-8">
+      <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Bantuan" }]} />
+
+      <div>
+        <h1 class="text-3xl font-extrabold text-ink">Bantuan</h1>
+        <p class="text-ink-soft mt-1">Panduan singkat menggunakan website UMKM Banyakprodo.</p>
+      </div>
+
+      <div class="space-y-4">
+        {faq.map((item) => (
+          <div class="bg-surface rounded-2xl p-5 border border-line shadow-sm">
+            <h2 class="font-bold text-ink flex items-start gap-2">
+              <span class="text-indigo-600">?</span> {item.q}
+            </h2>
+            <p class="text-ink-soft text-sm mt-2 leading-relaxed pl-5">{item.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

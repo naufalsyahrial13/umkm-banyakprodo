@@ -64,3 +64,46 @@ const QUERY_ALL_UMKM = `*[_type == "umkm"] | order(nama asc) {
 export async function getUmkmData(): Promise<UmkmItem[]> {
   return await sanityClient.fetch<UmkmItem[]>(QUERY_ALL_UMKM);
 }
+export interface KegiatanItem {
+  _id: string;
+  judul: string;
+  tanggal: string;
+  kategori: string;
+  isi: string;
+  foto: string | null;
+  penulis: string;
+}
+
+const QUERY_ALL_KEGIATAN = `*[_type == "kegiatan"] | order(tanggal desc) {
+  _id,
+  judul,
+  tanggal,
+  kategori,
+  isi,
+  "foto": foto.asset->url,
+  penulis
+}`;
+
+export async function getKegiatanData(): Promise<KegiatanItem[]> {
+  return await sanityClient.fetch<KegiatanItem[]>(QUERY_ALL_KEGIATAN);
+}
+
+export interface InformasiItem {
+  _id: string;
+  judul: string;
+  kategori: string;
+  isi: string;
+  sumber: string | null;
+}
+
+const QUERY_ALL_INFORMASI = `*[_type == "informasi"] | order(kategori asc) {
+  _id,
+  judul,
+  kategori,
+  isi,
+  sumber
+}`;
+
+export async function getInformasiData(): Promise<InformasiItem[]> {
+  return await sanityClient.fetch<InformasiItem[]>(QUERY_ALL_INFORMASI);
+}
