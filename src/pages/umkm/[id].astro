@@ -6,20 +6,15 @@ import VideoUsaha from '../../components/umkm/VideoUsaha.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getUmkmData } from '../../lib/sanity';
 
-export const prerender = true;
+const { id } = Astro.params;
+const umkmData = await getUmkmData();
+const item = umkmData.find((u) => u.id === id);
 
-export async function getStaticPaths() {
-  const umkmData = await getUmkmData();
-  return umkmData.map((item) => ({
-    params: { id: item.id },
-    props: {
-      item,
-      umkmSejenis: umkmData.filter((u) => u.kategori === item.kategori && u.id !== item.id),
-    },
-  }));
+if (!item) {
+  return Astro.redirect('/404');
 }
 
-const { item, umkmSejenis } = Astro.props;
+const umkmSejenis = umkmData.filter((u) => u.kategori === item.kategori && u.id !== item.id);
 ---
 
 <Layout
