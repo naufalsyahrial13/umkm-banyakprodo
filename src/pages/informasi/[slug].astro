@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getInformasiData } from '../../lib/sanity';
+
+const { slug } = Astro.params;
+const informasiData = await getInformasiData();
+const item = informasiData.find((i) => i.slug === slug);
+
+if (!item) {
+  return Astro.redirect('/404');
+}
+
+const informasiLain = informasiData.filter((i) => i.slug !== item.slug).slice(0, 3);
+---
+
+<Layout
+  title={`${item.judul} - Informasi & Peraturan Banyakprodo`}
+  description={item.isi.slice(0, 150)}
+>
+  <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto space-y-8">
+      <Breadcrumb items={[
+        { label: "Beranda", href: "/" },
+        { label: "Informasi & Peraturan", href: "/informasi" },
+        { label: item.judul },
+      ]} />
+
+      <article class="bg-surface rounded-3xl border border-line shadow-sm p-6 sm:p-8 space-y-4">
+        <span class="inline-block bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-lg w-fit">
+          {item.kategori}
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-ink leading-tight">{item.judul}</h1>
+        <p class="text-ink-soft leading-relaxed whitespace-pre-line">{item.isi}</p>
+        {item.sumber && <p class="text-ink-faint text-xs font-medium pt-2">Sumber: {item.sumber}</p>}
+      </article>
+
+      <a href="/informasi" class="inline-flex items-center gap-1.5 text-indigo-600 hover:text-indigo-700 font-bold text-sm">
+        ← Kembali ke Informasi & Peraturan
+      </a>
+
+      {informasiLain.length > 0 && (
+        <div class="space-y-4 pt-4">
+          <h2 class="text-xl font-bold text-ink">Informasi Lainnya</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {informasiLain.map((i) => (
+              <a href={i.slug ? `/informasi/${i.slug}` : '#'} class="bg-surface rounded-2xl border border-line p-4 hover:shadow-md transition-shadow space-y-1">
+                <span class="text-ink-faint text-xs font-medium">{i.kategori}</span>
+                <h3 class="text-sm font-bold text-ink leading-snug">{i.judul}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </main>
+</Layout>

@@ -64,8 +64,10 @@ const QUERY_ALL_UMKM = `*[_type == "umkm"] | order(nama asc) {
 export async function getUmkmData(): Promise<UmkmItem[]> {
   return await sanityClient.fetch<UmkmItem[]>(QUERY_ALL_UMKM);
 }
+
 export interface KegiatanItem {
   _id: string;
+  slug: string;
   judul: string;
   tanggal: string;
   kategori: string;
@@ -76,6 +78,7 @@ export interface KegiatanItem {
 
 const QUERY_ALL_KEGIATAN = `*[_type == "kegiatan"] | order(tanggal desc) {
   _id,
+  "slug": slug.current,
   judul,
   tanggal,
   kategori,
@@ -90,6 +93,7 @@ export async function getKegiatanData(): Promise<KegiatanItem[]> {
 
 export interface InformasiItem {
   _id: string;
+  slug: string;
   judul: string;
   kategori: string;
   isi: string;
@@ -98,6 +102,7 @@ export interface InformasiItem {
 
 const QUERY_ALL_INFORMASI = `*[_type == "informasi"] | order(kategori asc) {
   _id,
+  "slug": slug.current,
   judul,
   kategori,
   isi,

@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { getKegiatanData } from '../../lib/sanity';
+
+const { slug } = Astro.params;
+const kegiatanData = await getKegiatanData();
+const item = kegiatanData.find((k) => k.slug === slug);
+
+if (!item) {
+  return Astro.redirect('/404');
+}
+
+const KATEGORI_WARNA: Record<string, string> = {
+  Olahraga: 'bg-sawah-500',
+  Perlombaan: 'bg-soga-500',
+  Pengumuman: 'bg-indigo-600',
+  'Gotong Royong': 'bg-sawah-500',
+  Pertemuan: 'bg-indigo-600',
+  Lainnya: 'bg-ink',
+};
+
+function formatTanggal(iso: string) {
+  return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+const kegiatanLain = kegiatanData.filter((k) => k.slug !== item.slug).slice(0, 3);
+---
+
+<Layout
+  title={`${item.judul} - Kegiatan Terkini Banyakprodo`}
+  description={item.isi.slice(0, 150)}
+  gambar={item.foto ?? undefined}
+>
+  <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto space-y-8">
+      <Breadcrumb items={[
+        { label: "Beranda", href: "/" },
+        { label: "Kegiatan Terkini", href: "/kegiatan" },
+        { label: item.judul },
+      ]} />
+
+      <article class="bg-surface rounded-3xl overflow-hidden border border-line shadow-sm">
+        {item.foto && (
+          <img src={item.foto} alt={item.judul} class="w-full h-64 sm:h-80 object-cover" />
+        )}
+        <div class="p-6 sm:p-8 space-y-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class={`${KATEGORI_WARNA[item.kategori] || 'bg-ink'} text-white text-xs font-bold px-2.5 py-1 rounded-lg`}>
+              {item.kategori}
+            </span>
+            <span class="text-ink-faint text-xs font-medium">{formatTanggal(item.tanggal)}</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-ink leading-tight">{item.judul}</h1>
+          <p class="text-ink-soft leading-relaxed whitespace-pre-line">{item.isi}</p>
+          {item.penulis && <p class="text-ink-faint text-xs font-medium pt-2">Oleh: {item.penulis}</p>}
+        </div>
+      </article>
+
+      <a href="/kegiatan" class="inline-flex items-center gap-1.5 text-indigo-600 hover:text-indigo-700 font-bold text-sm">
+        ← Kembali ke Kegiatan Terkini
+      </a>
+
+      {kegiatanLain.length > 0 && (
+        <div class="space-y-4 pt-4">
+          <h2 class="text-xl font-bold text-ink">Kegiatan Lainnya</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {kegiatanLain.map((k) => (
+              <a href={k.slug ? `/kegiatan/${k.slug}` : '#'} class="bg-surface rounded-2xl border border-line p-4 hover:shadow-md transition-shadow space-y-1">
+                <span class="text-ink-faint text-xs font-medium">{formatTanggal(k.tanggal)}</span>
+                <h3 class="text-sm font-bold text-ink leading-snug">{k.judul}</h3>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </main>
+</Layout>

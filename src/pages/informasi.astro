@@ -4,11 +4,17 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import { getInformasiData } from '../lib/sanity';
 
 const informasiData = await getInformasiData();
+
+function cuplikan(teks: string, panjang = 140) {
+  if (!teks) return '';
+  if (teks.length <= panjang) return teks;
+  return teks.slice(0, panjang).replace(/\s+\S*$/, '') + '...';
+}
 ---
 
 <Layout title="Informasi & Peraturan - UMKM Banyakprodo" description="Informasi dan peraturan penting untuk warga Desa Banyakprodo">
   <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto space-y-8">
+    <div class="max-w-6xl mx-auto space-y-8">
       <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Informasi & Peraturan" }]} />
 
       <div>
@@ -21,18 +27,19 @@ const informasiData = await getInformasiData();
           <p class="text-ink-faint font-medium">Belum ada informasi yang diposting.</p>
         </div>
       ) : (
-        <div class="space-y-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {informasiData.map((info) => (
-            <div class="bg-surface rounded-3xl p-6 border border-line shadow-sm space-y-2">
-              <span class="inline-block bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-lg">
+            
+              <a href={info.slug ? `/informasi/${info.slug}` : '#'}
+              class="group bg-surface rounded-3xl p-6 border border-line shadow-sm hover:shadow-md transition-shadow space-y-2 flex flex-col"
+            >
+              <span class="inline-block bg-indigo-50 text-indigo-700 text-xs font-bold px-2.5 py-1 rounded-lg w-fit">
                 {info.kategori}
               </span>
-              <h2 class="text-lg font-bold text-ink">{info.judul}</h2>
-              <p class="text-ink-soft leading-relaxed whitespace-pre-line">{info.isi}</p>
-              {info.sumber && (
-                <p class="text-ink-faint text-xs font-medium pt-1">Sumber: {info.sumber}</p>
-              )}
-            </div>
+              <h2 class="text-lg font-bold text-ink leading-snug group-hover:text-indigo-600 transition-colors">{info.judul}</h2>
+              <p class="text-ink-soft text-sm leading-relaxed flex-1">{cuplikan(info.isi)}</p>
+              <span class="text-indigo-600 text-sm font-bold pt-1">Baca selengkapnya →</span>
+            </a>
           ))}
         </div>
       )}

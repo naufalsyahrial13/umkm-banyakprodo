@@ -17,11 +17,17 @@ const KATEGORI_WARNA: Record<string, string> = {
 function formatTanggal(iso: string) {
   return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 }
+
+function cuplikan(teks: string, panjang = 140) {
+  if (!teks) return '';
+  if (teks.length <= panjang) return teks;
+  return teks.slice(0, panjang).replace(/\s+\S*$/, '') + '...';
+}
 ---
 
 <Layout title="Kegiatan Terkini - UMKM Banyakprodo" description="Info kegiatan terbaru Desa Banyakprodo">
   <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-4xl mx-auto space-y-8">
+    <div class="max-w-6xl mx-auto space-y-8">
       <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Kegiatan Terkini" }]} />
 
       <div>
@@ -34,24 +40,31 @@ function formatTanggal(iso: string) {
           <p class="text-ink-faint font-medium">Belum ada kegiatan yang diposting.</p>
         </div>
       ) : (
-        <div class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {kegiatanData.map((k) => (
-            <div class="bg-surface rounded-3xl overflow-hidden border border-line shadow-sm">
-              {k.foto && (
-                <img src={k.foto} alt={k.judul} class="w-full h-56 object-cover" />
+            
+              <a href={k.slug ? `/kegiatan/${k.slug}` : '#'}
+              class="group bg-surface rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-md transition-shadow flex flex-col"
+            >
+              {k.foto ? (
+                <img src={k.foto} alt={k.judul} class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" />
+              ) : (
+                <div class="w-full h-44 bg-canvas flex items-center justify-center text-ink-faint text-sm">
+                  Tidak ada foto
+                </div>
               )}
-              <div class="p-6 space-y-3">
+              <div class="p-5 space-y-2 flex-1 flex flex-col">
                 <div class="flex items-center gap-3 flex-wrap">
                   <span class={`${KATEGORI_WARNA[k.kategori] || 'bg-ink'} text-white text-xs font-bold px-2.5 py-1 rounded-lg`}>
                     {k.kategori}
                   </span>
                   <span class="text-ink-faint text-xs font-medium">{formatTanggal(k.tanggal)}</span>
                 </div>
-                <h2 class="text-xl font-bold text-ink">{k.judul}</h2>
-                <p class="text-ink-soft leading-relaxed whitespace-pre-line">{k.isi}</p>
-                {k.penulis && <p class="text-ink-faint text-xs font-medium pt-2">Oleh: {k.penulis}</p>}
+                <h2 class="text-lg font-bold text-ink leading-snug group-hover:text-indigo-600 transition-colors">{k.judul}</h2>
+                <p class="text-ink-soft text-sm leading-relaxed flex-1">{cuplikan(k.isi)}</p>
+                <span class="text-indigo-600 text-sm font-bold pt-1">Baca selengkapnya →</span>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       )}
