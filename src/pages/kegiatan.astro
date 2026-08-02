@@ -18,7 +18,7 @@ function formatTanggal(iso: string) {
   return new Date(iso).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function cuplikan(teks: string, panjang = 140) {
+function cuplikan(teks: string, panjang = 160) {
   if (!teks) return '';
   if (teks.length <= panjang) return teks;
   return teks.slice(0, panjang).replace(/\s+\S*$/, '') + '...';
@@ -27,7 +27,7 @@ function cuplikan(teks: string, panjang = 140) {
 
 <Layout title="Kegiatan Terkini - UMKM Banyakprodo" description="Info kegiatan terbaru Desa Banyakprodo">
   <main class="min-h-screen bg-canvas py-10 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-6xl mx-auto space-y-8">
+    <div class="max-w-4xl mx-auto space-y-8">
       <Breadcrumb items={[{ label: "Beranda", href: "/" }, { label: "Kegiatan Terkini" }]} />
 
       <div>
@@ -40,20 +40,20 @@ function cuplikan(teks: string, panjang = 140) {
           <p class="text-ink-faint font-medium">Belum ada kegiatan yang diposting.</p>
         </div>
       ) : (
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="space-y-4">
           {kegiatanData.map((k) => (
             
               <a href={k.slug ? `/kegiatan/${k.slug}` : '#'}
-              class="group bg-surface rounded-3xl overflow-hidden border border-line shadow-sm hover:shadow-md transition-shadow flex flex-col"
+              class="group flex flex-col sm:flex-row gap-4 bg-surface rounded-2xl border border-line shadow-sm hover:shadow-md transition-shadow overflow-hidden p-4"
             >
               {k.foto ? (
-                <img src={k.foto} alt={k.judul} class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={k.foto} alt={k.judul} class="w-full sm:w-48 h-40 sm:h-32 object-cover rounded-xl flex-shrink-0" />
               ) : (
-                <div class="w-full h-44 bg-canvas flex items-center justify-center text-ink-faint text-sm">
+                <div class="w-full sm:w-48 h-40 sm:h-32 bg-canvas rounded-xl flex items-center justify-center text-ink-faint text-xs flex-shrink-0">
                   Tidak ada foto
                 </div>
               )}
-              <div class="p-5 space-y-2 flex-1 flex flex-col">
+              <div class="flex-1 space-y-1.5 min-w-0">
                 <div class="flex items-center gap-3 flex-wrap">
                   <span class={`${KATEGORI_WARNA[k.kategori] || 'bg-ink'} text-white text-xs font-bold px-2.5 py-1 rounded-lg`}>
                     {k.kategori}
@@ -61,8 +61,8 @@ function cuplikan(teks: string, panjang = 140) {
                   <span class="text-ink-faint text-xs font-medium">{formatTanggal(k.tanggal)}</span>
                 </div>
                 <h2 class="text-lg font-bold text-ink leading-snug group-hover:text-indigo-600 transition-colors">{k.judul}</h2>
-                <p class="text-ink-soft text-sm leading-relaxed flex-1">{cuplikan(k.isi)}</p>
-                <span class="text-indigo-600 text-sm font-bold pt-1">Baca selengkapnya →</span>
+                <p class="text-ink-soft text-sm leading-relaxed">{cuplikan(k.isi)}</p>
+                <span class="text-indigo-600 text-sm font-bold inline-block pt-1">Baca selengkapnya →</span>
               </div>
             </a>
           ))}
