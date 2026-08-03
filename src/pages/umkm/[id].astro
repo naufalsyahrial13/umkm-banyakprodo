@@ -15,6 +15,14 @@ if (!item) {
 }
 
 const umkmSejenis = umkmData.filter((u) => u.kategori === item.kategori && u.id !== item.id);
+
+function extractYoutubeId(url: string): string | null {
+  if (!url) return null;
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+const youtubeId = extractYoutubeId(item.video);
 ---
 
 <Layout
@@ -125,7 +133,7 @@ const umkmSejenis = umkmData.filter((u) => u.kategori === item.kategori && u.id 
           {item.video && (
             <div class="space-y-2">
               <h2 class="text-lg font-bold text-ink">Video Profil Usaha</h2>
-              <VideoUsaha videoId={item.video} judul={item.nama} />
+              <VideoUsaha videoId={youtubeId} judul={item.nama} />
             </div>
           )}
 
