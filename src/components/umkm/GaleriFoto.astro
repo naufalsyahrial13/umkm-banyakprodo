@@ -34,6 +34,8 @@ const galeri = gambar && gambar.length > 0 ? gambar : [];
         <span class="galeri-counter absolute bottom-3 right-3 bg-ink/70 text-white text-xs font-bold px-2.5 py-1 rounded-full z-20">1 / {galeri.length}</span>
       </>
     )}
+
+    <slot />
   </div>
 
   {galeri.length > 1 && (
