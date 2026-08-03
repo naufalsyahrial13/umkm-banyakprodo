@@ -38,6 +38,11 @@ export const sanityClient = createClient({
   useCdn: true,
 });
 
+function resizeGambar(url: string, lebar: number, kualitas = 75): string {
+  if (!url) return url;
+  return `${url}?w=${lebar}&q=${kualitas}&auto=format&fit=max`;
+}
+
 const QUERY_ALL_UMKM = `*[_type == "umkm"] | order(nama asc) {
   "id": slug.current,
   nama,
@@ -62,7 +67,11 @@ const QUERY_ALL_UMKM = `*[_type == "umkm"] | order(nama asc) {
 }`;
 
 export async function getUmkmData(): Promise<UmkmItem[]> {
-  return await sanityClient.fetch<UmkmItem[]>(QUERY_ALL_UMKM);
+  const data = await sanityClient.fetch<UmkmItem[]>(QUERY_ALL_UMKM);
+  return data.map((item) => ({
+    ...item,
+    galeri: (item.galeri || []).map((url) => resizeGambar(url, 1200)),
+  }));
 }
 
 export interface KegiatanItem {
@@ -88,7 +97,11 @@ const QUERY_ALL_KEGIATAN = `*[_type == "kegiatan"] | order(tanggal desc) {
 }`;
 
 export async function getKegiatanData(): Promise<KegiatanItem[]> {
-  return await sanityClient.fetch<KegiatanItem[]>(QUERY_ALL_KEGIATAN);
+  const data = await sanityClient.fetch<KegiatanItem[]>(QUERY_ALL_KEGIATAN);
+  return data.map((item) => ({
+    ...item,
+    foto: item.foto ? resizeGambar(item.foto, 900) : null,
+  }));
 }
 
 export interface InformasiItem {
