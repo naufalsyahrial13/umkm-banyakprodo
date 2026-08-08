@@ -12,6 +12,7 @@ export interface UmkmItem {
   nib: boolean;
   nomorNib: string;
   galeri: string[];
+  galeriThumb: string[];
   maps: string;
   instagram: string;
   facebook: string;
@@ -39,6 +40,13 @@ export const sanityClient = createClient({
 });
 
 function resizeGambar(url: string, lebar: number, kualitas = 75): string {
+  if (!url) return url;
+  return `${url}?w=${lebar}&q=${kualitas}&auto=format&fit=max`;
+}
+
+// Versi lebih kecil khusus untuk thumbnail (card katalog, list kegiatan).
+// Dipisah dari resizeGambar supaya gambar besar (detail) & kecil (grid) tidak saling menimpa.
+function resizeThumb(url: string, lebar = 480, kualitas = 70): string {
   if (!url) return url;
   return `${url}?w=${lebar}&q=${kualitas}&auto=format&fit=max`;
 }
@@ -71,6 +79,7 @@ export async function getUmkmData(): Promise<UmkmItem[]> {
   return data.map((item) => ({
     ...item,
     galeri: (item.galeri || []).map((url) => resizeGambar(url, 1200)),
+    galeriThumb: (item.galeri || []).map((url) => resizeThumb(url, 480)),
   }));
 }
 
@@ -82,6 +91,7 @@ export interface KegiatanItem {
   kategori: string;
   isi: string;
   foto: string | null;
+  fotoThumb: string | null;
   penulis: string;
 }
 
@@ -101,6 +111,7 @@ export async function getKegiatanData(): Promise<KegiatanItem[]> {
   return data.map((item) => ({
     ...item,
     foto: item.foto ? resizeGambar(item.foto, 900) : null,
+    fotoThumb: item.foto ? resizeThumb(item.foto, 400) : null,
   }));
 }
 

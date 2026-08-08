@@ -3,6 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { getInformasiData } from '../lib/sanity';
 
+Astro.response.headers.set('CDN-Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
 const informasiData = await getInformasiData();
 
 function cuplikan(teks: string, panjang = 160) {

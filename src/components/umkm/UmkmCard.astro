@@ -8,7 +8,8 @@ interface Props {
 }
 
 const { item, index = 0, variant = 'full' } = Astro.props;
-const thumbnail = item.galeri?.[0] || '';
+const thumbnail = item.galeriThumb?.[0] || item.galeri?.[0] || '';
+const eagerLoad = index < 3;
 
 const KATEGORI_META: Record<string, { warna: string; icon: string }> = {
   kuliner:   { warna: 'bg-soga-500 text-white',   icon: 'kuliner' },
@@ -34,7 +35,15 @@ const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META
       {thumbnail ? (
         <>
           <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
-          <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img
+            src={thumbnail}
+            alt={item.nama}
+            onload="this.previousElementSibling.remove()"
+            loading={eagerLoad ? "eager" : "lazy"}
+            decoding="async"
+            fetchpriority={eagerLoad ? "high" : "auto"}
+            class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         </>
       ) : (
         <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-canvas gap-2">
@@ -76,7 +85,14 @@ const kategoriMeta = KATEGORI_META[item.kategori.toLowerCase()] || KATEGORI_META
       {thumbnail ? (
         <>
           <div class="absolute inset-0 bg-line animate-pulse" aria-hidden="true"></div>
-          <img src={thumbnail} alt={item.nama} onload="this.previousElementSibling.remove()" class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img
+            src={thumbnail}
+            alt={item.nama}
+            onload="this.previousElementSibling.remove()"
+            loading="lazy"
+            decoding="async"
+            class="relative w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         </>
       ) : (
         <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-indigo-50 to-canvas gap-1.5">

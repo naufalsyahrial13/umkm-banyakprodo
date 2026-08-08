@@ -3,6 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import UmkmCard from '../components/umkm/UmkmCard.astro';
 import { getUmkmData } from '../lib/sanity';
 
+Astro.response.headers.set('CDN-Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
 const umkmData = await getUmkmData();
 const totalUmkm = umkmData.length;
 const totalKategori = new Set(umkmData.map(u => u.kategori)).size;
@@ -102,6 +105,8 @@ semuaKategoriFilter.forEach((k) => { kategoriLabels[k.toLowerCase()] = k; });
               <img
                 src="/peta-banyakprodo.jpeg"
                 alt="Peta Wilayah Desa Banyakprodo"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
             </div>
@@ -214,7 +219,7 @@ semuaKategoriFilter.forEach((k) => { kategoriLabels[k.toLowerCase()] = k; });
         </div>
 
         <div class="p-4 overflow-auto flex-1 flex items-center justify-center bg-canvas">
-          <img src="/peta-banyakprodo.jpeg" alt="Peta Desa Banyakprodo Full" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-sm" />
+          <img src="/peta-banyakprodo.jpeg" alt="Peta Desa Banyakprodo Full" loading="lazy" decoding="async" class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-sm" />
         </div>
 
       </div>

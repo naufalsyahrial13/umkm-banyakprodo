@@ -4,6 +4,10 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import { getKegiatanData } from '../../lib/sanity';
 
 const { slug } = Astro.params;
+
+Astro.response.headers.set('CDN-Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
 const kegiatanData = await getKegiatanData();
 const item = kegiatanData.find((k) => k.slug === slug);
 
@@ -42,7 +46,7 @@ const kegiatanLain = kegiatanData.filter((k) => k.slug !== item.slug).slice(0, 3
 
       <article class="bg-surface rounded-3xl overflow-hidden border border-line shadow-sm">
         {item.foto && (
-          <img src={item.foto} alt={item.judul} class="w-full h-64 sm:h-80 object-cover" />
+          <img src={item.foto} alt={item.judul} decoding="async" fetchpriority="high" class="w-full h-64 sm:h-80 object-cover" />
         )}
         <div class="p-6 sm:p-8 space-y-4">
           <div class="flex items-center gap-3 flex-wrap">

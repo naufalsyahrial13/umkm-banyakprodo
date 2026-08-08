@@ -3,6 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import { getKegiatanData } from '../lib/sanity';
 
+Astro.response.headers.set('CDN-Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
 const kegiatanData = await getKegiatanData();
 
 const KATEGORI_WARNA: Record<string, string> = {
@@ -47,7 +50,7 @@ function cuplikan(teks: string, panjang = 160) {
               class="group flex flex-col sm:flex-row gap-4 bg-surface rounded-2xl border border-line shadow-sm hover:shadow-md transition-shadow overflow-hidden p-4"
             >
               {k.foto ? (
-                <img src={k.foto} alt={k.judul} class="w-full sm:w-48 h-40 sm:h-32 object-cover rounded-xl flex-shrink-0" />
+                <img src={k.fotoThumb || k.foto} alt={k.judul} loading="lazy" decoding="async" class="w-full sm:w-48 h-40 sm:h-32 object-cover rounded-xl flex-shrink-0" />
               ) : (
                 <div class="w-full sm:w-48 h-40 sm:h-32 bg-canvas rounded-xl flex items-center justify-center text-ink-faint text-xs flex-shrink-0">
                   Tidak ada foto
